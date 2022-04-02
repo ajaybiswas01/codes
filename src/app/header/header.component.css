@@ -1,0 +1,33 @@
+.cartSec {
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .cartSec .cartCountSec {
+    margin: 0 0.625rem 0 0;
+    position: relative;
+  }
+  
+  .cartSec .cartCountSec .cartCount {
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #fff;
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: -0.625rem;
+    top: -0.625rem;
+  }
+  
+  .cartSec .cartCountSec i {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+  
+  .cartSec .cartValue {
+    font-size: 1rem;
+  }

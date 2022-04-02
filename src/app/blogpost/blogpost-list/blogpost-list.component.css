@@ -1,0 +1,62 @@
+.productItem {
+    background: #6c6e71;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  .productItem .dateSec {
+    color: #fff;
+    padding: 0 0 0.75rem;
+  }
+  
+  .productItem .dateSec .dateIcon {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+  }
+  
+  .productItem .dateSec .text1 {
+    padding: 0 0 0.25rem;
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+  
+  .productItem .dateSec .text2 {
+    font-size: 1.75rem;
+    line-height: 1.75rem;
+  }
+  
+  .productItem .eventName {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+    font-weight: 400;
+    margin: 0 0 0.75rem 0;
+    color: #d7ed9b;
+  }
+  
+  .productItem .eventPrice {
+    color: #9cb45a;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+  
+  .productItem .buyNow .btn {
+    background: #e6ae50;
+    border-radius: 0.75rem;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 700;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding: 0 1.25rem;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  
+  .productItem .buyNow .btn:hover {
+    background: #b07d28;
+  }
+  
