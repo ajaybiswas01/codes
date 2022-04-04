@@ -16,7 +16,7 @@
             <div class="sppedClassList">
                 <ul class="d-flex">
                     <ng-container *ngFor="let item of speedClassData">
-                        <li>
+                        <li (click)="classItemClick(item)" [ngClass]="classSelect === item.classID ? 'activeTab': ''">
                             <button class="btn">{{item.className}}</button>
                         </li>
                     </ng-container>

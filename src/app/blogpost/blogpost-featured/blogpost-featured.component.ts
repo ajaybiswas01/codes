@@ -25,6 +25,7 @@ export class BlogpostFeaturedComponent implements OnInit {
   eventId: any;
   speedClassData: [];
   cartItems: any[] = [];
+  classSelect: number;
 
   constructor(
     private blogpostService: BlogpostService,
@@ -34,6 +35,7 @@ export class BlogpostFeaturedComponent implements OnInit {
     this.popupShowHide = false;
     this.configPopup = false;
     this.speedClassPopup = false;
+    this.classSelect = 1;
   }
 
   ngOnInit() {
@@ -64,7 +66,8 @@ export class BlogpostFeaturedComponent implements OnInit {
   getEventsService() {
     const payload = {
       Key: this.commonserviceService.authKey(),
-      OrganizerID: this.OrganizerID
+      OrganizerID: this.OrganizerID,
+      SpeedClass: this.classSelect
     };
     this.commonserviceService.postservice(apiUrl.upcomingevents, payload)
       .subscribe(data => {
@@ -168,5 +171,9 @@ export class BlogpostFeaturedComponent implements OnInit {
         // // alert(error.error.message);
         // this.error = error.error.message;
       });
+  }
+  classItemClick(event:any){
+    this.classSelect = event.classID;
+    this.getEventsService();
   }
 }
