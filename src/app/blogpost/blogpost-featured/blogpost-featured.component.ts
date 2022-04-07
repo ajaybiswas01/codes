@@ -26,7 +26,8 @@ export class BlogpostFeaturedComponent implements OnInit {
   speedClassData: [];
   cartItems: any[] = [];
   classSelect: number;
-
+  orderNrID: number;
+  selectedItemData:any;
   constructor(
     private blogpostService: BlogpostService,
     private commonserviceService: CommonserviceService,
@@ -45,6 +46,7 @@ export class BlogpostFeaturedComponent implements OnInit {
     // );
     this.getOrganizerService();
     this.speedClassFunc();
+    this.orderNrFunc();
   }
 
   getOrganizerService() {
@@ -80,41 +82,27 @@ export class BlogpostFeaturedComponent implements OnInit {
   }
   buyNowFunc(ev: any) {
     console.log('ev', ev);
-    this.cartItems.push(ev);
-    for (const [i,v] of Object.entries(this.cartItems)) {
-      console.log('v', v)
-      console.log('i', i)
-      if (v.EventID === ev.EventID) {
-        // this.cartItems.push(v);
-        // this.cartItems.splice(i, 1);
-      } else{
-        // this.cartItems.push(v);
-      }
+    this.selectedItemData = ev;
+    if (ev.fullyBooked !== true) {
+      this.cartItems.push(ev);    
+      const payload = {
+        Key: this.commonserviceService.authKey(),
+        OrganizerID: this.OrganizerID,
+        EventID: ev.EventID,
+      };
+      this.eventId = ev.EventID;
+      this.totalPrice =  ev.EventPrice;
+      this.itemPrice = ev.EventPrice;
+      this.commonserviceService.postservice(apiUrl.attributs, payload)
+        .subscribe(data => {
+          this.popupShowHide = true;
+          this.configPopup = true;
+          if(data.ListAttributs.length > 0){
+            this.attributesData = data.ListAttributs;
+          }
+        }, error => {
+        });
     }
-    console.log('cartItems', this.cartItems);
-    
-    const payload = {
-      Key: this.commonserviceService.authKey(),
-      OrganizerID: this.OrganizerID,
-      EventID: ev.EventID,
-    };
-    this.eventId = ev.EventID;
-    this.totalPrice =  ev.EventPrice;
-    this.itemPrice = ev.EventPrice;
-    this.commonserviceService.postservice(apiUrl.attributs, payload)
-      .subscribe(data => {
-        console.log('data', data);
-        this.popupShowHide = true;
-        this.configPopup = true;
-        if(data.ListAttributs.length > 0){
-          this.attributesData = data.ListAttributs;
-        }
-        
-      }, error => {
-        // console.error("Error!", error.error.message);
-        // // alert(error.error.message);
-        // this.error = error.error.message;
-      });
   }
   popupClose(){
     this.popupShowHide = false;
@@ -154,22 +142,52 @@ export class BlogpostFeaturedComponent implements OnInit {
         // this.error = error.error.message;
       });
   }
+  orderNrFunc(){
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const payload = {
+      Key: this.commonserviceService.authKey(),
+      OrganizerID: this.OrganizerID,
+      CustomerID: currentUser.CustomerID,
+    };
+    this.commonserviceService.postservice(apiUrl.getOrderNr, payload)
+      .subscribe(data => {
+        this.orderNrID = data.OrderNr;
+      }, error => {
+        // console.error("Error!", error.error.message);
+        // // alert(error.error.message);
+        // this.error = error.error.message;
+      });
+  }
   speedClassFunc(){
-    this.configPopup = false;
-    this.speedClassPopup = true;
     const payload = {
       Key: this.commonserviceService.authKey(),
       OrganizerID: this.OrganizerID,
     };
     this.commonserviceService.postservice(apiUrl.speedclasses, payload)
       .subscribe(data => {
-        console.log('data', data);
         this.speedClassData=  data.ListSpeedClasses;
+      }, error => {
+      });
+  }
+  sendEventFunc(){
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.configPopup = false;
+    this.speedClassPopup = true;
+    const payload = {
+      Key: this.commonserviceService.authKey(),
+      OrganizerID: this.OrganizerID,
+      CustomerID:currentUser.CustomerID,
+      OrderNr:this.orderNrID,
+      EventID:this.selectedItemData.EventID,
+      EventDays:this.selectedItemData.EventDays,
+      EventPrice:this.totalPrice,
+      ClassID: this.classSelect,
+    };
+    this.commonserviceService.postservice(apiUrl.sendEvent, payload)
+      .subscribe(data => {
+        console.log('send', data)
         
       }, error => {
-        // console.error("Error!", error.error.message);
-        // // alert(error.error.message);
-        // this.error = error.error.message;
       });
   }
   classItemClick(event:any){

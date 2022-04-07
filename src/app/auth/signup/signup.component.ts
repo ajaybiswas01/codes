@@ -5,11 +5,11 @@ import { CommonserviceService } from 'src/app/services/commonservice.service';
 import { AuthService } from '../auth.service';
 import { apiUrl } from '../../app.constant';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
   loginForm: FormGroup;
   submitted = false;
@@ -28,16 +28,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      zipcode: ['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
 
     this.authService.logout();
     this.getOrganizerService()
   }
 
-  get email() { return this.loginForm.get('email'); }
-  get zipcode() { return this.loginForm.get('zipcode'); }
+  get username() { return this.loginForm.get('username'); }
+  get password() { return this.loginForm.get('password'); }
   getOrganizerService() {
     const payload = {
       Key: this.commonserviceService.authKey(),
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    this.authService.login(this.email.value, this.zipcode.value, this.OrganizerID).subscribe((data) => {
+    this.authService.login(this.username.value, this.password.value, this.OrganizerID).subscribe((data) => {
        if (this.authService.isLoggedIn) {
           const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin';
           this.router.navigate([redirect]);

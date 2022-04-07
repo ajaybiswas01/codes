@@ -1,16 +1,18 @@
 .productItem {
-    background: #6c6e71;
+    background: #fff;
     border-radius: 0.5rem;
     padding: 1.25rem;
     margin-bottom: 2rem;
+    box-shadow: 0 0 10px 0px rgb(0 0 0 / 15%);
+    height: calc(100% - 2rem);
 }
 .productItem .dateSec {
-    color: #fff;
+    color: #363636;
     padding: 0 0 0.75rem;
 }
 .productItem .dateSec .dateIcon {
-    font-size: 2.5rem;
-    line-height: 2.5rem;
+    font-size: 2rem;
+    line-height: 2rem;
 }
 .productItem .dateSec .text1 {
     padding: 0 0 0.25rem;
@@ -18,15 +20,15 @@
     line-height: 1rem;
 }
 .productItem .dateSec .text2 {
-    font-size: 1.75rem;
-    line-height: 1.75rem;
-}
-.productItem .eventName {
     font-size: 1.25rem;
     line-height: 1.25rem;
-    font-weight: 400;
+}
+.productItem .eventName {
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: 700;
     margin: 0 0 0.75rem 0;
-    color: #d7ed9b;
+    color: #001ca7;
 }
 .productItem .eventPrice {
     color: #9cb45a;
@@ -111,15 +113,25 @@
 }
 .sppedClassList ul {
     padding: 0;
-    margin: 0;
+    margin: 0 0 1rem;
+    border-bottom: 1px solid #ccc;
 }
 .sppedClassList ul li {
     list-style: none;
-    margin: 0 1rem;
+    margin: 0 0.5px;
 }
 .sppedClassList ul li .btn {
     background: rgb(156, 1, 1);
     color: #fff;
+    border: 0;
+    border-radius: 0;
+}
+.sppedClassList ul li .btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+.sppedClassList ul li.activeTab .btn {
+    background: #e6ae50;
 }
 .attributesRight {
     position: relative;

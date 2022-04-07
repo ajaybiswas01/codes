@@ -1,0 +1,25 @@
+.login-box {
+    background: white;
+    border: 1px solid #efefef;
+    box-shadow: rgb(0 0 0 / 5%) 1px 1px 10px;
+    width: 480px;
+    padding: 2.5rem;
+}
+.login-box h1 {
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-top: 0px;
+    text-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px;
+    margin-bottom: 1.5rem;
+}
+.login-box .form-control {
+    border-radius: 0;
+    height: 3rem;
+}
+.login-box .form-label {
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 0.75rem
+}

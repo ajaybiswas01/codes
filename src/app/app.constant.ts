@@ -19,6 +19,17 @@ export const apiUrl = {
     checkouturl: 'getCheckoutUrl',
     checkemail: 'checkEmail',
     checkadress: 'checkAdress',
+    getOrderNr: 'getOrderNr',
+    sendEvent: 'sendEvent',
+    sendAttribut: 'sendAttribut',
+    getCheckoutUrl: 'getCheckoutUrl',
+    checkEmail: 'checkEmail',
+    getAddress: 'getAddress',
+    createAccount: 'createAccount',
+    getDiscounts: 'GetDiscounts',
+    checkDiscountCode: 'checkDiscountCode',
+    
+
 };
 
 
