@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { CommonserviceService } from '../services/commonservice.service';
 import { apiUrl } from '../app.constant';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,8 @@ export class AuthService implements OnInit  {
   redirectUrl: string;
   OrganizerID: any;
   constructor(private http: HttpClient,
-    private commonserviceService: CommonserviceService) {
+    private commonserviceService: CommonserviceService,
+    private router: Router) {
       
     }
 
@@ -31,6 +33,11 @@ export class AuthService implements OnInit  {
     };
     return this.http.post<any>(`${this.serverUrl}checkLogin`, payload)
     .pipe(map(user => {
+      console.log('user', user.Status.Status);
+      if( user.Status.Status === false){
+        alert(user.Status.message+'. Please Signup');
+        this.router.navigateByUrl('register');
+      }
         if (user && user.CustomerID) {
           localStorage.setItem('currentUser', JSON.stringify(user));
         }

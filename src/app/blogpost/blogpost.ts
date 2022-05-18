@@ -5,4 +5,5 @@ export class Blogpost {
     author: string;
     image: string;
     created_at: Date;
+  length: number;
 }

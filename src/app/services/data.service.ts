@@ -3,12 +3,12 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class DataService {
-  private messageSource = new BehaviorSubject('');
+  private messageSource = new BehaviorSubject<any>([]);
   currentMessage = this.messageSource.asObservable();
 
   constructor() { }
 
-  changeMessage(msg: string) {
+  changeMessage(msg: any) {
     this.messageSource.next(msg);
   }
 }

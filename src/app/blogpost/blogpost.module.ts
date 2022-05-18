@@ -7,15 +7,21 @@ import { BlogpostListComponent } from './blogpost-list/blogpost-list.component';
 import { BlogpostDetailComponent } from './blogpost-detail/blogpost-detail.component';
 import { BlogpostRecentComponent } from './blogpost-recent/blogpost-recent.component';
 import { CategoriesComponent } from './categories/categories.component';
-
+import { dirConfig } from '../dir.config'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CartComponent } from './orders/cart/cart.component';
+import { CheckoutComponent } from './orders/checkout/checkout.component';
 @NgModule({
   imports: [
-    CommonModule,
-    BlogpostRoutingModule
+  
+  CommonModule,
+    BlogpostRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     BlogpostFeaturedComponent
   ],
-  declarations: [BlogpostFeaturedComponent, BlogpostListComponent, BlogpostDetailComponent, BlogpostRecentComponent, CategoriesComponent]
+  declarations: [BlogpostFeaturedComponent, BlogpostListComponent, BlogpostDetailComponent, BlogpostRecentComponent, CategoriesComponent, dirConfig,CartComponent,CheckoutComponent]
 })
 export class BlogpostModule { }

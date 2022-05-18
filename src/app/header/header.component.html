@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-blue">
     <div class="container">
-        <a class="navbar-brand" routerLink="/" (click)="setPageTitle('bokadin')">
-      Boka Din Bandag
-    </a>
+        <a class="navbar-brand" routerLink="/">
+            <ng-container *ngIf="organizerData">
+                <img src="{{organizerData['OrganizerLogo']}}" alt="{{organizerData['OrganizerName']}}" />
+            </ng-container>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,13 +23,24 @@
                     <a routerLink="/login" class="nav-link">Logout</a>
                 </li>
                 <li>
-                    <div class="cartSec d-flex align-items-center">
-                        <div class="cartCountSec">
-                            <span class="cartCount">0</span>
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <ng-container *ngIf="textFromChild.length === 0">
+                        <div class="cartSec d-flex align-items-center x" (click)="cartClick()">
+                            <div class="cartCountSec">
+                                <span class="cartCount">{{cartInfoCount[1]}}</span>
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </div>
+                            <span class="cartValue">{{cartInfoCount[0]}} SEK</span>
                         </div>
-                        <span class="cartValue">{{textFromChild}} SEK</span>
-                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="textFromChild.length > 0">
+                        <div class="cartSec d-flex align-items-center y" (click)="cartClick()">
+                            <div class="cartCountSec">
+                                <span class="cartCount">{{textFromChild[1]}}</span>
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            </div>
+                            <span class="cartValue">{{textFromChild[0]}} SEK</span>
+                        </div>
+                    </ng-container>
                 </li>
             </ul>
         </div>

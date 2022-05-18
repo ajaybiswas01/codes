@@ -16,14 +16,16 @@ import { AuthModule } from './auth/auth.module';
 
 import { httpInterceptorProviders } from './http-interceptors/index';
 import { DataService } from './services/data.service';
-
+import { dirConfig } from './dir.config';
+import { StorageService } from './services/storage.service';
+import { CartService } from './services/cart.service';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
     BannerComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ import { DataService } from './services/data.service';
     AppRoutingModule,
     
   ],
-  providers: [Title, httpInterceptorProviders, DataService],
+  providers: [Title, httpInterceptorProviders, DataService, StorageService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

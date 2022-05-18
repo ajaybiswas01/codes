@@ -1,0 +1,71 @@
+<div class="container pt-3 pb-3">
+
+    <div class="card text-center">
+        <ng-container *ngIf="cartData !== null">
+            <div class="card-header">
+                Your Cart Items
+                <button type="button" class="btn btn-sm btn-warning float-right">
+                Total items 
+                <ng-container *ngIf="cartData.length > 0">
+                    <span class="badge badge-light">{{cartData.length}}</span> 
+                </ng-container>
+                        
+                </button>
+                <button type="button" class="btn btn-sm btn-danger mr-2 float-right" (click)="emptyCart()" *ngIf="cartData && cartCountInfo">Empty</button>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="cartData.length === 0 && cartData === null">
+                            <tr>
+                                <td colspan="4" class="text-center">Empty Cart</td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="cartData.length > 0">
+                            <tr *ngFor="let itm of cartData; let i = index; ">
+                                <td class="text-left">{{itm.EventName}}</td>
+                                <td>{{itm.ItemTotalPrice/itm.Qnt}} x</td>
+                                <td class="w30">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-info" type="button" (click)="changeQty(itm.EventID,1,'', i)">+</button>
+                                        </div>
+                                        <input type="text" class="form-control text-center" value="{{itm.Qnt}}" #qtyRef (keyup)="changeQty(itm.EventID,qtyRef.value,'replace', i)">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-danger" type="button" (click)="changeQty(itm.EventID,-1,'', i)">-</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{itm.ItemTotalPrice}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <ng-container *ngIf="isLoggedIn === false">
+                    <button type="button" class="btn btn-sm btn-danger mr-2 float-right" (click)="checkoutClick()" *ngIf="cartData && cartCountInfo">
+                        Checkout       
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="isLoggedIn === true">
+                    <a class="btn btn-sm btn-danger mr-2 float-right" href="{{checkoutpath}}" target="_blank" routerLinkActive="router-link-active">Checkout</a>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="cartData.length > 0">
+                <div class="card-footer text-muted font-weight-bold">
+                    Total : Rs. {{cartCountInfo[0]}}
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="cartData === null || cartData.length > 0">
+            <p>No Cart item available </p>
+        </ng-container>
+    </div>
+</div>

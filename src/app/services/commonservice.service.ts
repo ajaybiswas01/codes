@@ -28,8 +28,9 @@ export class CommonserviceService {
     const key = 'F4914406-D2CE-4504-87B3-CF17642D28A1';
     return key;
   }
+ 
+
   postservice(url: any, payload: any): Observable<any> {
-    console.log(payload);
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
@@ -48,7 +49,6 @@ export class CommonserviceService {
   }
 
   getservice(url: any): Observable<any> {
-    console.log('apicall');
     const customHeaders = this.getHeadersForHttp();
     const httpOptions = {
       headers: new HttpHeaders(customHeaders)

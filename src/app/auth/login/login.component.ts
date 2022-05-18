@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
     this.getOrganizerService()
   }
+  get isLoggedIn() { return this.authService.isLoggedIn(); }
 
   get email() { return this.loginForm.get('email'); }
   get zipcode() { return this.loginForm.get('zipcode'); }
@@ -53,9 +54,24 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    this.authService.login(this.email.value, this.zipcode.value, this.OrganizerID).subscribe((data) => {
+    this.authService.login(this.email.value, this.zipcode.value, this.OrganizerID).subscribe(data => {
+      
+      // if(this.isLoggedIn === false){
+      //   this.router.navigateByUrl('register');
+      // }
+      console.log('isLoggedIn', this.isLoggedIn);
        if (this.authService.isLoggedIn) {
-          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/admin';
+        console.log('dd', data);
+        let pagePath: any;
+        const getCart = localStorage.getItem('cartInfo');
+        if(getCart !== null && this.isLoggedIn === true){
+          pagePath = 'cart';
+        } else if(this.isLoggedIn === false){
+          pagePath = 'register';
+        }else{
+          pagePath = '/';
+        }
+          const redirect = this.authService.redirectUrl ? this.authService.redirectUrl : pagePath;
           this.router.navigate([redirect]);
         } else {
           this.loginError = 'Username or password is incorrect.';

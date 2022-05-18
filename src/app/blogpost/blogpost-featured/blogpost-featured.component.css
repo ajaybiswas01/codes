@@ -1,10 +1,10 @@
 .productItem {
     background: #fff;
     border-radius: 0.5rem;
-    padding: 1.25rem;
-    margin-bottom: 2rem;
     box-shadow: 0 0 10px 0px rgb(0 0 0 / 15%);
     height: calc(100% - 2rem);
+    margin-bottom: 2rem;
+    padding: 1.25rem;
 }
 .productItem .dateSec {
     color: #363636;
@@ -15,20 +15,20 @@
     line-height: 2rem;
 }
 .productItem .dateSec .text1 {
-    padding: 0 0 0.25rem;
     font-size: 1rem;
     line-height: 1rem;
+    padding: 0 0 0.25rem;
 }
 .productItem .dateSec .text2 {
     font-size: 1.25rem;
     line-height: 1.25rem;
 }
 .productItem .eventName {
-    font-size: 1rem;
-    line-height: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 0.75rem 0;
     color: #001ca7;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25rem;
+    margin: 0 0 0.75rem 0;
 }
 .productItem .eventPrice {
     color: #9cb45a;
@@ -60,61 +60,61 @@
     background: rgb(156, 1, 1);
 }
 .attributesList ul {
-    padding: 0;
-    margin: 0 0 1rem 0;
     border-bottom: 1px solid #ccc;
+    margin: 0 0 1rem 0;
+    padding: 0;
 }
 .attributesList ul li {
     list-style: none;
     margin-bottom: 0.75rem;
 }
 .attrLable {
-    font-weight: 700;
     font-size: 1.125rem;
+    font-weight: 700;
 }
 .attrCheckbox input {
-    position: absolute;
     left: 0;
-    top: 0;
     opacity: 0;
+    position: absolute;
+    top: 0;
 }
 .attrCheckbox input+label {
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 1px solid #ccc;
     background: #fff;
+    border: 1px solid #ccc;
     display: inline-block;
-    vertical-align: top;
-    position: relative;
+    height: 1.25rem;
     margin: 0;
+    position: relative;
+    vertical-align: top;
+    width: 1.25rem;
 }
 .attrCheckbox input:checked+label {
     border-color: #9cb45a;
 }
 .attrCheckbox input:checked+label:after {
-    content: "";
-    width: 1rem;
-    height: 1rem;
     background: #9cb45a;
-    position: absolute;
+    content: "";
+    height: 1rem;
     left: 50%;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
+    width: 1rem;
 }
 .attrCheckbox input[disabled="true"]+label {
     background: rgba(255, 0, 0, 0.726);
     border-color: rgba(255, 0, 0, 0.726);
 }
 .totalPrice {
-    font-weight: 700;
     color: #444;
     font-size: 1.25rem;
+    font-weight: 700;
     line-height: 1.25rem;
 }
 .sppedClassList ul {
-    padding: 0;
-    margin: 0 0 1rem;
     border-bottom: 1px solid #ccc;
+    margin: 0 0 1rem;
+    padding: 0;
 }
 .sppedClassList ul li {
     list-style: none;
@@ -122,13 +122,13 @@
 }
 .sppedClassList ul li .btn {
     background: rgb(156, 1, 1);
-    color: #fff;
     border: 0;
     border-radius: 0;
+    color: #fff;
 }
 .sppedClassList ul li .btn:focus {
-    outline: none;
     box-shadow: none;
+    outline: none;
 }
 .sppedClassList ul li.activeTab .btn {
     background: #e6ae50;
@@ -137,17 +137,17 @@
     position: relative;
 }
 .attributesText {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    padding: 0.375rem;
-    color: #fff;
     background: #9cb45a;
-    font-size: 0.875rem;
-    line-height: 0.875rem;
     border-radius: 0.75rem;
-    visibility: hidden;
+    color: #fff;
+    font-size: 0.875rem;
+    left: 100%;
+    line-height: 0.875rem;
     opacity: 0;
+    padding: 0.375rem;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
 }
 .attributesRight:hover .attributesText {
     opacity: 1;
