@@ -37,6 +37,7 @@ export class CartComponent implements OnInit{
     localStorage.removeItem('cartInfo');
     localStorage.removeItem('cartInfoCount');
     this.cartData = [];
+    this.dataService.changeMessage([]);
   }
   changeQty(pid: any,qty: any,replace: any, index: any){
       const cntData = this.cartData

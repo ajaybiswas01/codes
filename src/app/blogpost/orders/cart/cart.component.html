@@ -49,14 +49,17 @@
                         </ng-container>
                     </tbody>
                 </table>
-                <ng-container *ngIf="isLoggedIn === false">
-                    <button type="button" class="btn btn-sm btn-danger mr-2 float-right" (click)="checkoutClick()" *ngIf="cartData && cartCountInfo">
-                        Checkout       
-                    </button>
-                </ng-container>
-                <ng-container *ngIf="isLoggedIn === true">
-                    <a class="btn btn-sm btn-danger mr-2 float-right" href="{{checkoutpath}}" target="_blank" routerLinkActive="router-link-active">Checkout</a>
-                </ng-container>
+                <div class="d-flex align-items-center justify-content-end">
+                    <a class="btn btn-sm btn-danger mr-2" routerLink="/" routerLinkActive="router-link-active">Continue Shopping</a>
+                    <ng-container *ngIf="isLoggedIn === false">
+                        <button type="button" class="btn btn-sm btn-danger ml-2" (click)="checkoutClick()" *ngIf="cartData && cartCountInfo">
+                            Checkout       
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="isLoggedIn === true">
+                        <a class="btn btn-sm btn-danger ml-2" href="{{checkoutpath}}" target="_blank" routerLinkActive="router-link-active">Checkout</a>
+                    </ng-container>
+                </div>
             </div>
             <ng-container *ngIf="cartData.length > 0">
                 <div class="card-footer text-muted font-weight-bold">
