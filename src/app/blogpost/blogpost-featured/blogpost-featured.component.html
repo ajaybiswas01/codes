@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="eventDaysbook">{{item.Daysbooked}}</div>
+                        <!-- <div class="eventDaysbook">{{item.Daysbooked}}</div> -->
                         <div class="eventPrice">{{item.EventPrice}} SEK</div>
                         <div class="buyNow">
                             <span class="btn" (click)="buyNowFunc(item)" [ngClass]="{'redButton': item.fullyBooked === true}">KOP</span>
@@ -51,26 +51,42 @@
                     <div class="popupInner">
                         <span class="popupClose" (click)="popupClose()"><i class="fa fa-times"></i></span>
                         <h4 class="text-center">Konfigurera</h4>
-                        <div class="attributesList">
-                            <ul>
-                                <ng-container *ngFor="let item of attributesData; let i=index">
-                                    <li class="d-flex align-items-center justify-content-between">
-                                        <span class="attrLable">{{item.Name}}</span>
-                                        <div class="attributesRight">
-                                            <span class="attrCheckbox">
-                                                    <input type="checkbox" [(ngModel)]="isChecked" [value]="item.AttributID" (change)="checkboxFunc($event, item)" id="idx_{{item.AttributID}}_{{i}}"  [attr.disabled]="item.fullyBooked === true ? true : null" />
-                                                    <label for="idx_{{item.AttributID}}_{{i}}"></label>
-                                                </span>
-                                            <span class="attributesText">{{item.Price}}</span>
-                                        </div>
-                                    </li>
+                        <div class="checkListSec">
+                            <ul class="d-flex">
+                                <ng-container *ngFor="let item of daysArray">
+                                    <li class="d-inline-flex mr-3 align-items-center"><input type="checkbox" [(ngModel)]="item.selected" (change)="checkboxDays($event, item)" /> <label class="m-0 ml-2">{{item.days}}</label></li>
                                 </ng-container>
                             </ul>
                         </div>
-                        <div class="totalPrice d-flex justify-content-end">Total: {{totalPrice}}</div>
-                        <div class="pt-3 d-flex justify-content-center">
-                            <button class="btn btn-info" (click)="sendEventFunc()">Submit</button>
-                        </div>
+                        <ng-container *ngIf="isCheckedValue">
+                            <div class="attributesList">
+                                <ul>
+                                    <ng-container *ngFor="let item of attributesData; let i=index">
+                                        <li class="d-flex align-items-center justify-content-between">
+                                            <span class="attrLable">{{item.Name}}</span>
+                                            <div class="attributesRight">
+                                                <ng-container *ngIf="item.Numeric === 0">
+                                                    <span class="attrCheckbox">
+                                                        <input type="checkbox" [(ngModel)]="isChecked" [value]="item.AttributID" (change)="checkboxFunc($event, item)" id="idx_{{item.AttributID}}_{{i}}"  [attr.disabled]="item.fullyBooked === true ? true : null" />
+                                                        <label for="idx_{{item.AttributID}}_{{i}}"></label>
+                                                    </span>
+                                                </ng-container>
+                                                <ng-container *ngIf="item.Numeric === 1">
+                                                    <span class="attrCheckboxSec">
+                                                        <input id="cntId{{i}}" type="number" (change)="onChangeFunc($event, item, i)" (keyup)="onChangeFunc($event, item)" />
+                                                    </span>
+                                                </ng-container>
+                                                <span class="attributesText">{{item.Price}}</span>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                            <div class="totalPrice d-flex justify-content-end">Total: {{totalPrice}}</div>
+                            <div class="pt-3 d-flex justify-content-center">
+                                <button class="btn btn-info" (click)="sendEventFunc()">Submit</button>
+                            </div>
+                        </ng-container>
 
 
 

@@ -11,6 +11,8 @@ import { dirConfig } from '../dir.config'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartComponent } from './orders/cart/cart.component';
 import { CheckoutComponent } from './orders/checkout/checkout.component';
+import { CountPipe } from './count.pipe';
+
 @NgModule({
   imports: [
   
@@ -22,6 +24,6 @@ import { CheckoutComponent } from './orders/checkout/checkout.component';
   exports: [
     BlogpostFeaturedComponent
   ],
-  declarations: [BlogpostFeaturedComponent, BlogpostListComponent, BlogpostDetailComponent, BlogpostRecentComponent, CategoriesComponent, dirConfig,CartComponent,CheckoutComponent]
+  declarations: [BlogpostFeaturedComponent, BlogpostListComponent, BlogpostDetailComponent, BlogpostRecentComponent, CategoriesComponent, dirConfig,CartComponent,CheckoutComponent, CountPipe]
 })
 export class BlogpostModule { }

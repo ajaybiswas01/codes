@@ -153,3 +153,6 @@
     opacity: 1;
     visibility: visible;
 }
+.attrCheckboxSec input{
+    width: 4rem;
+}

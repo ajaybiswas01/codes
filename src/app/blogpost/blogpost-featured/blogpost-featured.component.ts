@@ -7,6 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { formatDate } from "@angular/common";
 
 @Component({
   selector: 'app-blogpost-featured',
@@ -25,6 +26,7 @@ export class BlogpostFeaturedComponent implements OnInit {
   totalPriceSum: any[] = [];
   itemPrice: any;
   totalPrice: any;
+  totalPriceOth: any[];
   eventId: any;
   speedClassData: [];
   cartItems: any[] = [];
@@ -33,6 +35,10 @@ export class BlogpostFeaturedComponent implements OnInit {
   selectedItemData: [];
   selectedItemCart: any[] = [];
   loggedInCheck: boolean;
+  daysArray: any[];
+  isCheckedValue: boolean;
+  checkboxes: any;
+  updatedArray: any[] = [];
   constructor(
     private blogpostService: BlogpostService,
     private commonserviceService: CommonserviceService,
@@ -47,6 +53,7 @@ export class BlogpostFeaturedComponent implements OnInit {
     this.classSelect = 1;
     this.loggedInCheck = true;
     this.isChecked = false;
+    this.checkboxes = 0;
     localStorage.setItem('classSelect', JSON.stringify(this.classSelect));
   }
   @Input("allProductList") blogss: any = {};
@@ -95,7 +102,30 @@ export class BlogpostFeaturedComponent implements OnInit {
       });
   }
   buyNowFunc(ev: any) {
+    this.updatedArray = []
     console.log('ev', ev);
+    const format = 'dd-MM-yyyy';
+    const myDate = ev.EventDate;
+    const locale = 'en-US';
+    let formattedDate: any;
+    // formattedDate = formatDate(myDate, format, locale);
+
+    console.log('formattedDate', formattedDate)
+
+    let date: any;
+    let dateArr = []
+    for (let index = 0; index < ev.EventDays; index++) {
+      let i = (index + 1)
+      date = new Date(new Date(ev.EventDate).getTime() + (i * 24 * 60 * 60 * 1000));
+      formattedDate = formatDate(date, format, locale);
+      let f = formattedDate.split('-');
+      dateArr.push({ days: f[0] + '/' + f[1], date: formattedDate, selected: false });
+    }
+
+    console.log('endDate', dateArr)
+    this.daysArray = dateArr;
+    let daysBok = ev.Daysbooked.split(';');
+    console.log('daysBok', daysBok)
     this.totalPrice = 0;
     if (ev.fullyBooked !== true) {
       this.cartItems.push(ev);
@@ -107,6 +137,7 @@ export class BlogpostFeaturedComponent implements OnInit {
       this.eventId = ev.EventID;
       this.totalPrice = ev.EventPrice;
       this.itemPrice = ev.EventPrice;
+      this.totalPriceOth = [ev.EventPrice]
       this.attributesData = []
       this.commonserviceService.postservice(apiUrl.attributs, payload)
         .subscribe(data => {
@@ -119,6 +150,8 @@ export class BlogpostFeaturedComponent implements OnInit {
         });
     }
     this.selectedItemData = ev;
+    this.updatedArray.push({ cardPrice: ev.EventPrice, qty: '', attrPrice: '', allTotal: ev.EventPrice })
+    console.log('fsss', this.updatedArray)
   }
   popupClose() {
     this.popupShowHide = false;
@@ -127,21 +160,78 @@ export class BlogpostFeaturedComponent implements OnInit {
     console.log('data', data)
     if (ev.currentTarget.checked === true) {
       this.isChecked = false;
-      this.totalPriceSum.push(data);
+      // this.totalPriceSum.push(data);
     }
+    // if (ev.currentTarget.checked === false) {
+    //   this.isChecked = false;
+    //   for (let index = 0; index < this.totalPriceSum.length; index++) {
+    //     const element = this.totalPriceSum[index];
+    //     if (element.AttributID === ev.target.value) {
+    //       this.totalPriceSum.splice(index, 1);
+    //     }
+
+    //   }
+    // }
+    // const f = this.totalPriceSum.reduce((n, { Price }) => n + Price, 0);
+    // console.log('f', f)
+    // let fg : any;
+    // if (ev.currentTarget.checked === false) {
+    //   fg = Number(this.totalPrice) - Number(data.Price);
+    // } else{
+    //   fg = Number(this.totalPrice) + Number(f);
+    // }
+
+    // this.totalPrice = fg;
+    
+    
+    let cnt: any;
     if (ev.currentTarget.checked === false) {
       this.isChecked = false;
-      for (let index = 0; index < this.totalPriceSum.length; index++) {
-        const element = this.totalPriceSum[index];
-        if (element.AttributID === ev.target.value) {
-          this.totalPriceSum.splice(index, 1);
-        }
-
+      cnt = 0;
+    } else {
+      cnt = 1;
+    }
+    const f = data.Price * cnt;
+    // this.totalPrice += f;
+    for (let index = 0; index < this.attributesData.length; index++) {
+      if (!this.updatedArray.some(el => el.idx === data['AttributID'])) {
+        this.updatedArray.push({ qty: cnt, attrPrice: data.Price, allTotal: f, idx: data['AttributID'] })
       }
     }
-    const f = this.totalPriceSum.reduce((n, { Price }) => n + Price, 0)
-    const fg = Number(this.itemPrice) + Number(f);
-    this.totalPrice = fg;
+    this.updatedArray.forEach((element: any, index) => {
+      if (element.idx === data['AttributID']) {
+        this.updatedArray[index]['qty'] = cnt;
+        this.updatedArray[index]['attrPrice'] = data.Price;
+        this.updatedArray[index]['allTotal'] = f;
+      }
+    });
+    const totalChild = this.updatedArray.reduce((accum, item) => accum + item.allTotal, 0);
+    console.log('totalChild', this.updatedArray)
+    this.totalPrice = totalChild;
+
+
+
+  }
+  checkboxDays(ev: any, data: any) {
+    console.log('data', data)
+    console.log('dd', ev.currentTarget.checked)
+    // if (ev.currentTarget.checked === true) {
+    //   this.isCheckedValue = false;
+    // }
+    if (ev.currentTarget.checked === true) {
+      this.daysArray.forEach(element => {
+        if (element.selected === true) {
+          this.isCheckedValue = true;
+        }
+
+      });
+    } else {
+      this.daysArray.forEach(element => {
+        if (element.selected === false) {
+          this.isCheckedValue = false;
+        }
+      });
+    }
 
 
   }
@@ -259,6 +349,44 @@ export class BlogpostFeaturedComponent implements OnInit {
         this.speedClassData = data.ListSpeedClasses;
       }, error => {
       });
+  }
+  onChangeFunc(ev: any, data: any, inx:any) {
+    console.log('ev', ev)
+    if (ev.target.value < 0  ) {
+      console.log('t', ev.target.value)
+ 
+      document.getElementById("cntId"+inx).setAttribute('value','0');
+      return false;
+    }
+    let cnt: any;
+    if (ev.target.value === '') {
+      cnt = 0;
+    } else {
+      cnt = ev.target.value;
+    }
+    const f = data.Price * cnt;
+    // this.totalPrice += f;
+    for (let index = 0; index < this.attributesData.length; index++) {
+      if (!this.updatedArray.some(el => el.idx === data['AttributID'])) {
+        this.updatedArray.push({ qty: ev.target.value, attrPrice: data.Price, allTotal: f, idx: data['AttributID'] })
+      }
+    }
+    this.updatedArray.forEach((element: any, index) => {
+      if (element.idx === data['AttributID']) {
+        this.updatedArray[index]['qty'] = ev.target.value;
+        this.updatedArray[index]['attrPrice'] = data.Price;
+        this.updatedArray[index]['allTotal'] = f;
+      }
+    });
+    const totalChild = this.updatedArray.reduce((accum, item) => accum + item.allTotal, 0);
+    this.totalPrice = totalChild;
+  }
+  onChangeNew(ev: any, data: any) {
+    console.log('ev==', ev.target.value)
+    const f = data.Price * ev.target.value;
+    console.log('f', this.totalPriceOth)
+    const fg = Number(this.itemPrice) + Number(f);
+    this.totalPrice = fg;
   }
 
   classItemClick(event: any) {
