@@ -232,6 +232,7 @@ footer {
     background: #fff;
     padding: 2rem;
     width: 28rem;
+    min-height: 18rem;
 }
 .popupClose {
     width: 2rem;

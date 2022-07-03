@@ -1,158 +1,30 @@
-.productItem {
-    background: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px 0px rgb(0 0 0 / 15%);
-    height: calc(100% - 2rem);
-    margin-bottom: 2rem;
-    padding: 1.25rem;
-}
-.productItem .dateSec {
-    color: #363636;
-    padding: 0 0 0.75rem;
-}
-.productItem .dateSec .dateIcon {
-    font-size: 2rem;
-    line-height: 2rem;
-}
-.productItem .dateSec .text1 {
-    font-size: 1rem;
-    line-height: 1rem;
-    padding: 0 0 0.25rem;
-}
-.productItem .dateSec .text2 {
-    font-size: 1.25rem;
-    line-height: 1.25rem;
-}
-.productItem .eventName {
-    color: #001ca7;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25rem;
-    margin: 0 0 0.75rem 0;
-}
-.productItem .eventPrice {
-    color: #9cb45a;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.5rem;
-    margin: 0 0 1rem 0;
-}
-.productItem .buyNow .btn {
-    background: #e6ae50;
-    border-radius: 0.75rem;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.25rem;
-    font-weight: 700;
-    height: 2.5rem;
-    line-height: 2.5rem;
-    padding: 0 1.25rem;
-    text-transform: uppercase;
-    width: 100%;
-}
-.productItem .buyNow .btn.redButton {
-    background: #f00;
-}
-.productItem .buyNow .btn:hover {
-    background: #b07d28;
-}
-.productItem .buyNow .btn.redButton:hover {
-    background: rgb(156, 1, 1);
-}
-.attributesList ul {
-    border-bottom: 1px solid #ccc;
-    margin: 0 0 1rem 0;
-    padding: 0;
-}
-.attributesList ul li {
-    list-style: none;
-    margin-bottom: 0.75rem;
-}
-.attrLable {
-    font-size: 1.125rem;
-    font-weight: 700;
-}
-.attrCheckbox input {
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-}
-.attrCheckbox input+label {
-    background: #fff;
-    border: 1px solid #ccc;
-    display: inline-block;
-    height: 1.25rem;
-    margin: 0;
-    position: relative;
-    vertical-align: top;
-    width: 1.25rem;
-}
-.attrCheckbox input:checked+label {
-    border-color: #9cb45a;
-}
-.attrCheckbox input:checked+label:after {
-    background: #9cb45a;
-    content: "";
-    height: 1rem;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 1rem;
-}
-.attrCheckbox input[disabled="true"]+label {
-    background: rgba(255, 0, 0, 0.726);
-    border-color: rgba(255, 0, 0, 0.726);
-}
-.totalPrice {
-    color: #444;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.25rem;
-}
-.sppedClassList ul {
-    border-bottom: 1px solid #ccc;
-    margin: 0 0 1rem;
-    padding: 0;
-}
-.sppedClassList ul li {
-    list-style: none;
-    margin: 0 0.5px;
-}
-.sppedClassList ul li .btn {
-    background: rgb(156, 1, 1);
-    border: 0;
-    border-radius: 0;
-    color: #fff;
-}
-.sppedClassList ul li .btn:focus {
-    box-shadow: none;
-    outline: none;
-}
-.sppedClassList ul li.activeTab .btn {
-    background: #e6ae50;
-}
-.attributesRight {
-    position: relative;
-}
-.attributesText {
-    background: #9cb45a;
-    border-radius: 0.75rem;
-    color: #fff;
-    font-size: 0.875rem;
-    left: 100%;
-    line-height: 0.875rem;
-    opacity: 0;
-    padding: 0.375rem;
-    position: absolute;
-    top: 0;
-    visibility: hidden;
-}
-.attributesRight:hover .attributesText {
-    opacity: 1;
-    visibility: visible;
-}
-.attrCheckboxSec input{
-    width: 4rem;
-}
+.productItem{background:#fff;border-radius:.5rem;box-shadow:0 0 10px 0 rgb(0 0 0 / 15%);height:calc(100% - 2rem);margin-bottom:2rem;padding:1.25rem}
+.productItem .dateSec{color:#363636;padding:0 0 .75rem}
+.productItem .dateSec .dateIcon{font-size:2rem;line-height:2rem}
+.productItem .dateSec .text1{font-size:1rem;line-height:1rem;padding:0 0 .25rem}
+.productItem .dateSec .text2{font-size:1.25rem;line-height:1.25rem}
+.productItem .eventName{color:#001ca7;font-size:1rem;font-weight:700;line-height:1.25rem;margin:0 0 .75rem 0}
+.productItem .eventPrice{color:#9cb45a;font-size:1.5rem;font-weight:700;line-height:1.5rem;margin:0 0 1rem 0}
+.productItem .buyNow .btn{background:#e6ae50;border-radius:.75rem;color:#fff;cursor:pointer;font-size:1.25rem;font-weight:700;height:2.5rem;line-height:2.5rem;padding:0 1.25rem;text-transform:uppercase;width:100%}
+.productItem .buyNow .btn.redButton{background:red}
+.productItem .buyNow .btn:hover{background:#b07d28}
+.productItem .buyNow .btn.redButton:hover{background:#9c0101}
+.attributesList ul{border-bottom:1px solid #ccc;margin:0 0 1rem 0;padding:0}
+.attributesList ul li{list-style:none;margin-bottom:.75rem}
+.attrLable{font-size:1.125rem;font-weight:700}
+.attrCheckbox input{left:0;opacity:0;position:absolute;top:0}
+.attrCheckbox input+label{background:#fff;border:1px solid #ccc;display:inline-block;height:1.25rem;margin:0;position:relative;vertical-align:top;width:1.25rem}
+.attrCheckbox input:checked+label{border-color:#9cb45a}
+.attrCheckbox input:checked+label:after{background:#9cb45a;content:"";height:1rem;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:1rem}
+.attrCheckbox input[disabled=true]+label{background:rgba(255,0,0,.726);border-color:rgba(255,0,0,.726)}
+.totalPrice{color:#444;font-size:1.25rem;font-weight:700;line-height:1.25rem}
+.sppedClassList ul{border-bottom:1px solid #ccc;margin:0 0 1rem;padding:0}
+.sppedClassList ul li{list-style:none;margin:0 .5px}
+.sppedClassList ul li .btn{background:#9c0101;border:0;border-radius:0;color:#fff}
+.sppedClassList ul li .btn:focus{box-shadow:none;outline:0}
+.sppedClassList ul li.activeTab .btn{background:#e6ae50}
+.attributesRight{position:relative}
+.attributesText{background:#9cb45a;border-radius:.75rem;color:#fff;font-size:.875rem;left:100%;line-height:.875rem;opacity:0;padding:.375rem;position:absolute;top:0;visibility:hidden}
+.attributesRight:hover .attributesText{opacity:1;visibility:visible}
+.attrCheckboxSec input{width:4rem}
+.soldoutText{font-weight: 600;padding-bottom: 1rem;font-size: 1.25rem;color: #b07d28;}

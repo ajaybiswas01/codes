@@ -8,6 +8,8 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
 import { formatDate } from "@angular/common";
+import { FormGroup, FormControl, FormArray } from "@angular/forms";
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-blogpost-featured',
@@ -35,10 +37,13 @@ export class BlogpostFeaturedComponent implements OnInit {
   selectedItemData: [];
   selectedItemCart: any[] = [];
   loggedInCheck: boolean;
-  daysArray: any[];
+  daysArray: any = [];
   isCheckedValue: boolean;
   checkboxes: any;
   updatedArray: any[] = [];
+  dateForm: FormGroup;
+  selectedDateNames: [string];
+  itemCardData: [];
   constructor(
     private blogpostService: BlogpostService,
     private commonserviceService: CommonserviceService,
@@ -61,13 +66,11 @@ export class BlogpostFeaturedComponent implements OnInit {
 
   @Output() refresh: EventEmitter<string> = new EventEmitter();
   ngOnInit() {
-    // this.blogpostService.getFeaturedBlogs().subscribe(
-    //   (data: Blogpost) => this.blogs = data,
-    //   error => this.error = error
-    // );
+
     this.getOrganizerService();
     this.speedClassFunc();
     this.orderNrFunc();
+    this.daysArray = [{ days: '', date: '', selected: false }];
   }
   get isLoggedIn() { return this.authService.isLoggedIn(); }
   getOrganizerService() {
@@ -102,6 +105,7 @@ export class BlogpostFeaturedComponent implements OnInit {
       });
   }
   buyNowFunc(ev: any) {
+    this.itemCardData = ev;
     this.updatedArray = []
     console.log('ev', ev);
     const format = 'dd-MM-yyyy';
@@ -113,46 +117,91 @@ export class BlogpostFeaturedComponent implements OnInit {
     console.log('formattedDate', formattedDate)
 
     let date: any;
-    let dateArr = []
+    let dateArr = [];
+    let selV: boolean;
+    if (ev.fullyBooked === true) {
+      selV = true;
+    } else {
+      selV = false;
+    }
     for (let index = 0; index < ev.EventDays; index++) {
       let i = (index + 1)
       date = new Date(new Date(ev.EventDate).getTime() + (i * 24 * 60 * 60 * 1000));
       formattedDate = formatDate(date, format, locale);
       let f = formattedDate.split('-');
-      dateArr.push({ days: f[0] + '/' + f[1], date: formattedDate, selected: false });
+      dateArr.push({ days: f[0] + '/' + f[1], date: formattedDate, selected: selV });
     }
 
     console.log('endDate', dateArr)
     this.daysArray = dateArr;
+    this.createFormInputs();
     let daysBok = ev.Daysbooked.split(';');
     console.log('daysBok', daysBok)
     this.totalPrice = 0;
-    if (ev.fullyBooked !== true) {
-      this.cartItems.push(ev);
-      const payload = {
-        Key: this.commonserviceService.authKey(),
-        OrganizerID: this.OrganizerID,
-        EventID: ev.EventID,
-      };
-      this.eventId = ev.EventID;
-      this.totalPrice = ev.EventPrice;
-      this.itemPrice = ev.EventPrice;
-      this.totalPriceOth = [ev.EventPrice]
-      this.attributesData = []
-      this.commonserviceService.postservice(apiUrl.attributs, payload)
-        .subscribe(data => {
-          this.popupShowHide = true;
-          this.configPopup = true;
-          if (data.ListAttributs.length > 0) {
-            this.attributesData = data.ListAttributs;
-          }
-        }, error => {
-        });
-    }
+
+    this.cartItems.push(ev);
+    const payload = {
+      Key: this.commonserviceService.authKey(),
+      OrganizerID: this.OrganizerID,
+      EventID: ev.EventID,
+    };
+    this.eventId = ev.EventID;
+    this.totalPrice = ev.EventPrice;
+    this.itemPrice = ev.EventPrice;
+    this.totalPriceOth = [ev.EventPrice]
+    this.attributesData = []
+    this.commonserviceService.postservice(apiUrl.attributs, payload)
+      .subscribe(data => {
+        this.popupShowHide = true;
+        this.configPopup = true;
+        if (data.ListAttributs.length > 0) {
+          this.attributesData = data.ListAttributs;
+        }
+      }, error => {
+      });
+
     this.selectedItemData = ev;
     this.updatedArray.push({ cardPrice: ev.EventPrice, qty: '', attrPrice: '', allTotal: ev.EventPrice })
     console.log('fsss', this.updatedArray)
   }
+
+
+  createFormInputs() {
+    this.dateForm = new FormGroup({
+      dateslist: this.createDates(this.daysArray)
+    });
+    this.getSelectedDates();
+  }
+
+  createDates(datesInputs) {
+    const arr = datesInputs.map(dt => {
+      return new FormControl(dt.selected || false);
+    });
+    return new FormArray(arr);
+  }
+
+  getSelectedDates() {
+    this.selectedDateNames = _.map(
+      this.dateForm.controls.dateslist["controls"],
+      (dt: any, i: any) => {
+        return dt.value && this.daysArray[i].date;
+      }
+    );
+    this.getSelectedDateName();
+  }
+
+  getSelectedDateName() {
+    this.selectedDateNames = _.filter(
+      this.selectedDateNames,
+      function (dr: boolean) {
+        if (dr !== false) {
+          return dr;
+        }
+      }
+    );
+  }
+
+
   popupClose() {
     this.popupShowHide = false;
   }
@@ -182,8 +231,8 @@ export class BlogpostFeaturedComponent implements OnInit {
     // }
 
     // this.totalPrice = fg;
-    
-    
+
+
     let cnt: any;
     if (ev.currentTarget.checked === false) {
       this.isChecked = false;
@@ -350,12 +399,12 @@ export class BlogpostFeaturedComponent implements OnInit {
       }, error => {
       });
   }
-  onChangeFunc(ev: any, data: any, inx:any) {
+  onChangeFunc(ev: any, data: any, inx: any) {
     console.log('ev', ev)
-    if (ev.target.value < 0  ) {
+    if (ev.target.value < 0) {
       console.log('t', ev.target.value)
- 
-      document.getElementById("cntId"+inx).setAttribute('value','0');
+
+      document.getElementById("cntId" + inx).setAttribute('value', '0');
       return false;
     }
     let cnt: any;
