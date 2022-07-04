@@ -81,7 +81,9 @@ export class CartComponent implements OnInit{
     };
     this.commonserviceService.postservice(apiUrl.getCheckoutUrl, payload)
       .subscribe(data => {
-        this.checkoutpath = data.URL;
+        const spu = data.URL.split('?')
+        const url = spu[0] + '?ONR='+this.cartCountInfo[0];
+        this.checkoutpath = url;
       }, error => {
       });
     }
