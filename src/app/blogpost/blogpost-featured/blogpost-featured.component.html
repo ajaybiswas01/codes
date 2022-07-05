@@ -14,7 +14,7 @@
         <div class="topPane mb-3 d-flex justify-content-center">
             <!-- <span class="hamburgerIcon" (click)="hamburgerMenu()"><i class="fa fa-bars"></i></span> -->
             <div class="sppedClassList">
-                <ul class="d-flex">
+                <ul class="d-flex flex-wrap">
                     <ng-container *ngFor="let item of speedClassData">
                         <li (click)="classItemClick(item)" [ngClass]="classSelect === item.classID ? 'activeTab': ''">
                             <button class="btn">{{item.className}}</button>
