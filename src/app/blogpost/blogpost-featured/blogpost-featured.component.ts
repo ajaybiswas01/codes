@@ -69,7 +69,6 @@ export class BlogpostFeaturedComponent implements OnInit {
 
     this.getOrganizerService();
     this.speedClassFunc();
-    this.orderNrFunc();
     this.daysArray = [{ days: '', date: '', selected: false }];
   }
   get isLoggedIn() { return this.authService.isLoggedIn(); }
